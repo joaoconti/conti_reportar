@@ -1,4 +1,4 @@
-# Fabrica de armas ilegal
+# Reportar player
 
 **Como instalar:**
 
