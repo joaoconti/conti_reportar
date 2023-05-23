@@ -7,7 +7,7 @@ conti = Tunnel.getInterface("conti_reportar")
 local id_quem_reportou = nil
 
 RegisterCommand(Config.comando, function()
-    id_quem_reportou = GetPlayerServerId(PlayerId())
+    id_quem_reportou = conti.getPlayer()
     ShowNui()
 end)
 

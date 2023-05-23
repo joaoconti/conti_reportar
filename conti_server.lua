@@ -12,12 +12,11 @@ function conti.report(id_quem_reportou, id_reportadado, motivo)
     local identidade = vRP.query("conti_reportar/vrp_user_identities", {
         user_id = id_reportadado
     })
-    local informacoes = vRP.query("conti_reportar/vrp_user_ids", {
-        user_id = id_reportadado
-    })
     if #identidade >= 1 then
         local identidade = identidade[1]
-
+        local informacoes = vRP.query("conti_reportar/vrp_user_ids", {
+            user_id = id_reportadado
+        })
         local embed = {{
             ["color"] = 16711680,
             ["fields"] = {{
@@ -37,7 +36,7 @@ function conti.report(id_quem_reportou, id_reportadado, motivo)
                 ["value"] = '🔹 **Discord:** <@' .. string.gsub(
                     vRP.query("conti_reportar/vrp_user_ids", {
                         user_id = id_quem_reportou
-                    })[5].identifier, "discord:", "") .. '>',
+                    })[1].identifier, "discord:", "") .. '>',
                 ["inline"] = false
             }, {
                 ["name"] = "",
@@ -61,15 +60,11 @@ function conti.report(id_quem_reportou, id_reportadado, motivo)
                 ["inline"] = false
             }, {
                 ["name"] = "",
-                ["value"] = '🔸 **Steam:** ' .. string.gsub(informacoes[1].identifier, "steam:", ""),
+                ["value"] = '🔸 **Steam:** ' .. string.gsub(informacoes[4].identifier, "steam:", ""),
                 ["inline"] = false
             }, {
                 ["name"] = "",
                 ["value"] = '🔸 **Licensa:** ' .. string.gsub(informacoes[2].identifier, "license:", ""),
-                ["inline"] = false
-            }, {
-                ["name"] = "",
-                ["value"] = '🔸 **Licensa2:** ' .. string.gsub(informacoes[6].identifier, "license2:", ""),
                 ["inline"] = false
             }, {
                 ["name"] = "",
@@ -81,7 +76,7 @@ function conti.report(id_quem_reportou, id_reportadado, motivo)
                 ["inline"] = false
             }, {
                 ["name"] = "",
-                ["value"] = '🔸 **Discord:** ' .. '<@' .. string.gsub(informacoes[5].identifier, "discord:", "") ..
+                ["value"] = '🔸 **Discord:** ' .. '<@' .. string.gsub(informacoes[1].identifier, "discord:", "") ..
                     '>',
                 ["inline"] = false
             }}
@@ -98,4 +93,10 @@ function conti.report(id_quem_reportou, id_reportadado, motivo)
     else
         return false
     end
+end
+
+function conti.getPlayer()
+    local source = source
+    local user_id = vRP.getUserId(source)
+    return user_id
 end
